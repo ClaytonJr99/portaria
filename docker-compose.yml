@@ -1,0 +1,43 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nestdb
+      MYSQL_USER: nestuser
+      MYSQL_PASSWORD: nestpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - nestnet
+
+  app:
+    build: .
+    container_name: nestjs-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: nestuser
+      DB_PASS: nestpass
+      DB_NAME: nestdb
+      SHADOW_DATABASE_DISABLED: "true"
+    networks:
+      - nestnet
+    volumes:
+      - .:/usr/src/app
+    command: sh -c "./entrypoint.sh"
+
+volumes:
+  mysql_data:
+
+networks:
+  nestnet:

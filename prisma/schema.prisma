@@ -1,0 +1,30 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Lote {
+  id        Int      @id @default(autoincrement())
+  nome      String   @db.VarChar(100)
+  ativo     Boolean  @default(true)
+  criado_em DateTime @default(now())
+  boletos   Boleto[]
+}
+
+model Boleto {
+  id              Int      @id @default(autoincrement())
+  nome_sacado     String   @db.VarChar(255)
+  lote            Lote     @relation(fields: [id_lote], references: [id])
+  id_lote         Int
+  valor           Decimal  @db.Decimal(10, 2)
+  linha_digitavel String   @db.VarChar(255)
+  ativo           Boolean  @default(true)
+  criado_em       DateTime @default(now())
+}
