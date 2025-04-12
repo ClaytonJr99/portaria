@@ -7,7 +7,6 @@ Este projeto é uma API para importação de boletos do sistema financeiro para 
 - Importação de boletos a partir de arquivos CSV
 - Processamento de arquivos PDF com boletos
 - Consulta de boletos com filtros
-- Geração de relatório em PDF
 
 ## Estrutura do Banco de Dados
 
@@ -18,29 +17,23 @@ O projeto utiliza duas tabelas principais:
 
 ## Pré-requisitos
 
-- Node.js (v14 ou superior)
-- MySQL (v5.7 ou superior)
-- Docker e Docker Compose (opcional, para ambiente containerizado)
+- Node.js
+- Docker e Docker Compose
 
 ## Instalação
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/portaria.git
-cd portaria
-```
+1. Clone o repositório
+
 
 2. Instale as dependências:
 ```bash
 yarn install
 ```
 
-3. Configure o arquivo `.env` com as informações do seu banco de dados:
-```
-DATABASE_URL="mysql://nestuser:nestpass@mysql:3306/nestdb"
-```
+3. Configure o arquivo `.env` conforme o`.env.example`
 
-4. Para iniciar o ambiente com Docker:
+
+4. Inicie o ambiente com Docker:
 ```bash
 docker-compose up -d
 ```
@@ -107,7 +100,7 @@ GET /boletos?relatorio=1
 
 ## Exemplos de Arquivos
 
-No repositório, incluímos arquivos de exemplo para testes:
+No repositório, está incluido arquivos de exemplo para testes:
 
 - `exemplo_boletos.csv`: Arquivo CSV com dados de boletos
 - `uploads/boletos_exemplo.pdf`: Arquivo PDF com os boletos (gerado automaticamente durante a inicialização do container Docker)
@@ -116,13 +109,3 @@ Se precisar gerar manualmente o arquivo PDF, execute:
 ```bash
 yarn generate:pdf
 ```
-
-## Implementação
-
-O sistema funciona da seguinte forma:
-
-1. **Mapeamento de Lotes**: O sistema mapeia os lotes do sistema externo para o interno usando a formatação do nome do lote.
-2. **Importação de Boletos**: Os boletos são importados via CSV e vinculados aos lotes correspondentes.
-3. **Processamento de PDF**: O sistema divide o PDF em páginas individuais e as associa aos boletos importados.
-4. **Consulta e Filtros**: É possível consultar os boletos com filtros variados.
-5. **Relatório PDF**: Um relatório em PDF pode ser gerado com os dados filtrados.

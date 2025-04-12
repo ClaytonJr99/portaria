@@ -1,13 +1,13 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as dotenv from 'dotenv';
+// import * as dotenv from 'dotenv';
 import { PrismaService } from './prisma.service';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
-dotenv.config();
+// dotenv.config();
 
 async function bootstrap() {
   try {
@@ -22,7 +22,6 @@ async function bootstrap() {
 
     const app = await NestFactory.create(AppModule);
 
-    // Habilitar CORS
     app.enableCors();
 
     app.useGlobalPipes(new ValidationPipe());

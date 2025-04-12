@@ -7,13 +7,5 @@ declare module 'pdf-lib' {
     addPage(options?: any): any;
     copyPages(pdfDoc: PDFDocument, indices: number[]): Promise<any[]>;
     save(): Promise<Uint8Array>;
-    embedFont(standardFont: any): Promise<any>;
   }
-
-  export const StandardFonts: {
-    Helvetica: string;
-    [key: string]: string;
-  };
-
-  export function rgb(r: number, g: number, b: number): any;
 }
